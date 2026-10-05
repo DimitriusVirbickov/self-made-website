@@ -1,0 +1,671 @@
+/* ==========================================================
+   Theater & Praktijk · HvA minor
+   ========================================================== */
+
+/* ---------- Kleuren & thema (licht / donker) ---------- */
+:root {
+  --bg: #F6F3FF;
+  --ink: #14121F;
+  --card: #fff;
+  --mut: #5A5670;
+  --blue: #2335F5;
+  --pink: #FF4FA3;
+  --sun: #FFD23F;
+  --line: #14121F22;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14121F;
+    --ink: #F6F3FF;
+    --card: #221F36;
+    --mut: #B6B1CF;
+    --line: #F6F3FF33
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #14121F;
+  --ink: #F6F3FF;
+  --card: #221F36;
+  --mut: #B6B1CF;
+  --line: #F6F3FF33;
+}
+
+/* ---------- Reset & basis ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  scroll-padding-top: env(safe-area-inset-top, 0px);
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 1.05rem/1.55 "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.02;
+  margin: 0 0 .5em;
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+
+h1 {
+  font-size: clamp(3rem, 11vw, 8rem);
+}
+
+h2 {
+  font-size: clamp(2rem, 5vw, 3.4rem);
+}
+
+h3 {
+  font-size: 1.3rem;
+  letter-spacing: 0;
+}
+
+p {
+  margin: 0 0 1em;
+  max-width: 62ch;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--pink);
+  outline-offset: 3px;
+}
+
+/* ---------- Layout ---------- */
+
+.wrap {
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+section {
+  padding: 64px 0;
+}
+
+/* ---------- Header & navigatie ---------- */
+
+header.top {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 5;
+  background: var(--bg);
+  border-bottom: 2px solid var(--ink);
+}
+
+header.top .wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.logo {
+  font-weight: 800;
+  text-decoration: none;
+  font-size: 1.15rem;
+  margin-right: auto;
+}
+
+nav {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+nav a {
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 99px;
+  font-weight: 600;
+  font-size: .95rem;
+}
+
+nav a:hover {
+  background: var(--sun);
+  color: #14121F;
+}
+
+nav a[aria-current] {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.lang {
+  border: 2px solid var(--ink);
+  border-radius: 99px;
+  padding: 4px 12px;
+  font-weight: 800;
+  text-decoration: none;
+  font-size: .9rem;
+}
+
+/* ---------- Knoppen ---------- */
+
+.btn {
+  display: inline-block;
+  padding: 14px 24px;
+  border: 2px solid #14121F;
+  border-radius: 99px;
+  font: 800 1rem inherit;
+  font-family: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  background: var(--sun);
+  color: #14121F;
+  box-shadow: 4px 4px 0 #14121F;
+  transition: transform .15s, box-shadow .15s;
+}
+
+.btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #14121F;
+}
+
+.btn.pink {
+  background: var(--pink);
+}
+
+.btn.ghost {
+  background: #fff;
+}
+
+.btn.sm {
+  padding: 8px 16px;
+  font-size: .9rem;
+}
+
+.cta {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+
+/* ---------- Landingspagina (taalkeuze) ---------- */
+.landing {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.landing a {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 32px;
+  text-decoration: none;
+  color: #fff;
+  transition: flex .3s;
+}
+
+.landing .nl {
+  background: var(--blue);
+}
+
+.landing .en {
+  background: var(--pink);
+  color: #14121F;
+}
+
+.landing span.big {
+  font-size: clamp(3.5rem, 12vw, 9rem);
+  font-weight: 800;
+  line-height: .9;
+  letter-spacing: -.03em;
+}
+
+.landing small {
+  font-size: 1.1rem;
+  margin-top: 14px;
+  max-width: 26ch;
+}
+
+.landing a:hover,
+.landing a:focus-visible {
+  filter: brightness(1.08);
+}
+
+@media (max-width:700px) {
+  .landing {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr
+  }
+}
+
+/* ---------- Hero & feitenbalk ---------- */
+.hero {
+  background: var(--blue);
+  color: #fff;
+  padding: 72px 0 80px;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero h1 {
+  margin-bottom: .2em;
+}
+
+.hero .rot {
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  font-weight: 600;
+}
+
+.hero .rot b {
+  display: inline-block;
+  background: var(--sun);
+  color: #14121F;
+  padding: 0 .35em;
+  border-radius: .3em;
+  transform: rotate(-2deg);
+  min-width: 3ch;
+  animation: pop .5s;
+}
+
+@keyframes pop {
+  from {
+    transform: rotate(-8deg) scale(.7);
+    opacity: 0
+  }
+}
+
+.hero .spot {
+  position: absolute;
+  right: -120px;
+  top: -120px;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #FFD23F66, transparent 65%);
+  pointer-events: none;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0;
+  border: 2px solid var(--ink);
+  margin-top: -36px;
+  position: relative;
+  background: var(--card);
+}
+
+.facts div {
+  padding: 18px;
+  border-right: 2px solid var(--ink);
+}
+
+.facts div:last-child {
+  border: 0;
+}
+
+.facts b {
+  display: block;
+  font-size: 1.7rem;
+  line-height: 1.1;
+}
+
+.facts span {
+  color: var(--mut);
+  font-size: .9rem;
+}
+
+@media (max-width:600px) {
+  .facts div {
+    border-right: 0;
+    border-bottom: 2px solid var(--ink)
+  }
+}
+
+/* ---------- Stickers ---------- */
+.stickers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.sticker {
+  border: 2px solid var(--ink);
+  border-radius: 18px;
+  padding: 14px 18px;
+  background: var(--card);
+  max-width: 260px;
+}
+
+.sticker:nth-child(3n+1) {
+  transform: rotate(-1.5deg);
+  background: var(--sun);
+  color: #14121F;
+}
+
+.sticker:nth-child(3n+2) {
+  transform: rotate(1.2deg);
+  background: var(--pink);
+  color: #14121F;
+}
+
+.sticker b {
+  font-size: 1.25rem;
+  display: block;
+}
+
+.sticker span {
+  font-size: .92rem;
+}
+
+/* ---------- Posters & productiekaarten ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 22px;
+}
+
+.prod {
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+}
+
+.poster {
+  aspect-ratio: 3/4;
+  border: 2px solid var(--ink);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #14121F;
+  overflow: hidden;
+  position: relative;
+  transition: transform .2s;
+}
+
+.prod:hover .poster {
+  transform: rotate(-1.5deg) scale(1.02);
+}
+
+.poster i {
+  font-style: normal;
+  font-size: 5rem;
+  font-weight: 800;
+  line-height: .8;
+  opacity: .9;
+}
+
+.poster strong {
+  font-size: 1.5rem;
+  line-height: 1;
+  font-weight: 800;
+}
+
+.poster small {
+  font-weight: 600;
+}
+
+.p0 {
+  background: var(--sun);
+}
+
+.p1 {
+  background: var(--pink);
+}
+
+.p2 {
+  background: #7BE0C3;
+}
+
+.p3 {
+  background: #9AA5FF;
+}
+
+.meta {
+  padding: 10px 2px;
+  font-size: .9rem;
+  color: var(--mut);
+}
+
+.tag {
+  display: inline-block;
+  border: 2px solid var(--ink);
+  border-radius: 99px;
+  padding: 0 10px;
+  font-size: .8rem;
+  font-weight: 600;
+  margin-right: 6px;
+  color: var(--ink);
+}
+
+/* ---------- Tabellen & lijsten ---------- */
+
+.two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+@media (max-width:800px) {
+  .two {
+    grid-template-columns: 1fr
+  }
+}
+
+.scroll {
+  overflow-x: auto;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 520px;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 2px solid var(--line);
+  vertical-align: top;
+}
+
+th {
+  font-weight: 800;
+}
+
+ol.goals {
+  padding-left: 1.2em;
+}
+
+ol.goals li {
+  margin-bottom: .7em;
+  max-width: 60ch;
+}
+
+.band {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.band .btn {
+  box-shadow: 4px 4px 0 var(--pink);
+}
+
+/* ---------- Docenten, tegels, filters & dialoog ---------- */
+
+.who {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 28px;
+}
+
+.av {
+  flex: none;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 1.6rem;
+  color: #14121F;
+}
+
+.tile {
+  aspect-ratio: 4/3;
+  border: 2px dashed var(--ink);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 14px;
+  color: var(--mut);
+  font-size: .95rem;
+}
+
+.filters {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 0 0 28px;
+}
+
+.filters input,
+.filters select {
+  font: inherit;
+  padding: 10px 14px;
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--ink);
+}
+
+dialog {
+  border: 2px solid var(--ink);
+  padding: 0;
+  max-width: min(680px, 94vw);
+  background: var(--bg);
+  color: var(--ink);
+}
+
+dialog::backdrop {
+  background: #14121Fcc;
+}
+
+dialog .in {
+  padding: 26px;
+}
+
+.note {
+  font-size: .9rem;
+  color: var(--mut);
+}
+
+/* ---------- Footer ---------- */
+
+footer {
+  border-top: 2px solid var(--ink);
+  padding: 28px 0 40px;
+  font-size: .92rem;
+}
+
+footer .wrap {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.adm {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* ---------- Toegankelijkheid ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important
+  }
+}
+
+/* ---------- Utilities (voorheen inline styles) ---------- */
+h1.xl {
+  font-size: clamp(2.6rem, 8vw, 6rem);
+}
+
+.lead {
+  font-size: 1.2rem;
+}
+
+.lead.narrow {
+  max-width: 44ch;
+}
+
+.grid.grid-2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.mt-12 {
+  margin-top: 12px;
+}
+
+.mt-14 {
+  margin-top: 14px;
+}
+
+.mt-24 {
+  margin-top: 24px;
+}
+
+.note.note-inv {
+  color: inherit;
+  opacity: .8;
+}
+
+.cta.flush {
+  margin: 0 0 24px;
+}
+
+.poster.poster-wide {
+  aspect-ratio: 16/9;
+  margin-bottom: 16px;
+}
+
+.poster.poster-wide strong {
+  font-size: 2.4rem;
+}
