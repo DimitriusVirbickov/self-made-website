@@ -4,8 +4,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Theater & Praktijk · Theatre & Practice · HvA minor</title>
-
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎭</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css">
@@ -15,7 +13,7 @@
   <dialog id="dlg"></dialog>
 
 <script>
-/* ---------- Voorbeelddata: vervang door eigen producties ---------- */
+
 const PRODS = [{
   id: 'p1',
   title: 'Het Laatste Bedrijf',
@@ -40,36 +38,36 @@ const PRODS = [{
   year: '2025–2026',
   track: 'voltijd',
   status: 'archive',
-  nl: 'Voorbeeldproductie voor het archief.',
-  en: 'Sample production for the archive.',
-  who: '—'
+  nl: '',
+  en: '',
+  who: ''
 }, {
   id: 'p4',
   title: 'Open Curtain',
   year: '2025–2026',
   track: 'deeltijd',
   status: 'archive',
-  nl: 'Voorbeeldproductie voor het archief.',
-  en: 'Sample production for the archive.',
-  who: '—'
+  nl: '',
+  en: '',
+  who: ''
 }, {
   id: 'p5',
   title: 'Wie Speelt Wie',
   year: '2024–2025',
   track: 'voltijd',
   status: 'archive',
-  nl: 'Voorbeeldproductie voor het archief.',
-  en: 'Sample production for the archive.',
-  who: '—'
+  nl: '',
+  en: '',
+  who: ''
 }, {
   id: 'p6',
   title: 'Second Act',
   year: '2024–2025',
   track: 'deeltijd',
   status: 'archive',
-  nl: 'Voorbeeldproductie voor het archief.',
-  en: 'Sample production for the archive.',
-  who: '—'
+  nl: '',
+  en: '',
+  who: ''
 }];
 const MAIL = {
   nl: 'f.christiaans@hva.nl',
@@ -105,26 +103,16 @@ const TEACH = [
   ['Wout Nooitgedagt', 'WN', 'Didactiek · Acteren & regisseren · De voorstelling', 'Didactics · Acting & directing · The performance', '#7BE0C3']
 ];
 
-/* ---------- state ---------- */
+
 let L = 'nl',
   pg = 'home',
   F = {
     q: '',
     year: '',
     track: ''
-  },
-  admin = false,
-  moved = new Set();
-try {
-  moved = new Set(JSON.parse(localStorage.getItem('tp-moved') || '[]'))
-} catch (e) {}
+  };
 const t = (nl, en) => L === 'nl' ? nl : en;
-const isCur = p => p.status === 'current' && !moved.has(p.id);
-const save = () => {
-  try {
-    localStorage.setItem('tp-moved', JSON.stringify([...moved]))
-  } catch (e) {}
-};
+const isCur = p => p.status === 'current';
 const PAGES = [
   ['home', 'Home', 'Home'],
   ['over', 'Over de opleiding', 'About the minor'],
@@ -137,13 +125,13 @@ const href = p => `#/${L}/${p}`;
 const trackLbl = k => k === 'voltijd' ? t('Voltijd · NL', 'Full-time · EN') : t('Deeltijd · NL', 'Part-time · EN');
 const trackName = k => k === 'voltijd' ? t('Voltijd', 'Full-time') : t('Deeltijd', 'Part-time');
 
-/* ---------- views ---------- */
+
 function poster(p, i) {
   return `<button class="prod" data-open="${p.id}"><div class="poster p${i%4}"><small>${p.year}</small><i>${p.title[0]}</i><strong>${p.title}</strong></div><div class="meta"><span class="tag">${p.track==='voltijd'?t('Voltijd','Full-time'):t('Deeltijd','Part-time')}</span>${t('Bekijk','View')}</div></button>`
 }
 
-function prodGrid(list, adm) {
-  return list.length ? `<div class="grid">${list.map((p,i)=>`<div>${poster(p,i)}${adm?`<button class="btn sm ghost" data-move="${p.id}">${t('Verplaats naar archief','Move to archive')}</button>`:''}</div>`).join('')}</div>` : `<p>${t('Nog geen voorstellingen aangekondigd. Kijk binnenkort weer, of blader door het archief.','No shows announced yet. Check back soon, or browse the archive.')}</p>`
+function prodGrid(list) {
+  return list.length ? `<div class="grid">${list.map((p,i)=>`<div>${poster(p,i)}</div>`).join('')}</div>` : `<p>${t('Nog geen voorstellingen aangekondigd. Kijk binnenkort weer, of blader door het archief.','No shows announced yet. Check back soon, or browse the archive.')}</p>`
 }
 const cta = () => `<div class="cta"><a class="btn" href="${href('over')}#programma">${t('Bekijk het programma','View the programme')}</a><a class="btn pink" href="${href('contact')}">${t('Kom kennismaken','Come say hello')}</a><a class="btn ghost" href="${href('contact')}#inschrijven">${t('Schrijf je in','Apply')}</a></div>`;
 
@@ -162,14 +150,11 @@ const V = {
 <section><div class="wrap"><h2>${t('Wat leer je hier?','What will you learn?')}</h2>
  <p>${t('Niet alleen vakken, vooral vaardigheden.','Not just subjects, mostly skills.')}</p>
  <div class="stickers">${SKILLS.map(s=>`<div class="sticker"><b>${t(s[0],s[1])}</b><span>${t(s[2],s[3])}</span></div>`).join('')}</div></div></section>
-<section><div class="wrap two"><div><h2>${t('Voor wie?','Who is it for?')}</h2>
+<section><div class="wrap"><div><h2>${t('Voor wie?','Who is it for?')}</h2>
  <p>${t('Je zit in je laatste jaar van hbo of universiteit: drie jaar les en tentamens achter de rug. Naast stage en scriptie kijk je met 30 studiepunten even buiten je eigen studie.','You are in your final year of university or applied sciences: three years of classes and exams behind you. Next to your internship and thesis, 30 credits let you look beyond your own field.')}</p>
  <p>${t('Ook uitwisselingsstudenten zijn welkom in de Engelstalige minor: een half jaar Amsterdam om toneel te zien, te leren acteren en zelf toneel te maken.','Exchange students are welcome in the English-taught minor: half a year in Amsterdam to watch theatre, learn to act and make theatre yourself.')}</p></div>
- <div><h2>${t('Zo zie je het','See what it feels like')}</h2><div class="grid grid-2">
- <div class="tile">${t('Foto: repetitie','Photo: rehearsal')}</div><div class="tile">${t('Video: fragment uit een voorstelling','Video: show excerpt')}</div>
- <div class="tile">${t('Citaat van een student','Student quote')}</div><div class="tile">${t('Foto: opbouw in Crea','Photo: set-up at Crea')}</div></div>
- <p class="note mt-10">${t('Plaats hier eigen foto’s, video’s en verhalen van huidige en oud-studenten.','Add your own photos, videos and stories from current and former students here.')}</p></div></div></section>
-<section class="band"><div class="wrap"><h2>${t('Nu in het theater','Now playing')}</h2>${prodGrid(PRODS.filter(isCur).slice(0,4),false)}<div class="cta"><a class="btn" href="${href('voorstellingen')}">${t('Alle voorstellingen','All shows')}</a></div></div></section>`,
+</div></section>
+<section class="band"><div class="wrap"><h2>${t('Nu in het theater','Now playing')}</h2>${prodGrid(PRODS.filter(isCur).slice(0,4))}<div class="cta"><a class="btn" href="${href('voorstellingen')}">${t('Alle voorstellingen','All shows')}</a></div></div></section>`,
 
   over: () => `
 <section><div class="wrap"><h1 class="xl">${t('Over de opleiding','About the minor')}</h1>
@@ -191,13 +176,11 @@ const V = {
  <p>${t('Literatuur ca. € 80, theaterbezoek ca. € 150 (gemiddeld € 10–15 per voorstelling met groepskorting; een CJP of stadspas helpt). Een excursie is optioneel en wordt aan het begin aangekondigd.','Literature about € 80, theatre visits about € 150 (on average € 10–15 per show with group discount; a CJP or city pass helps). An excursion is optional and announced at the start.')}</p></div></div></section>`,
 
   docenten: () => `<section><div class="wrap"><h1 class="xl">${t('Docenten','Teachers')}</h1>
- ${TEACH.map(x=>`<div class="who"><div class="av" style="background:${x[4]}">${x[1]}</div><div><h3>${x[0]}</h3><p>${t(x[2],x[3])}</p></div></div>`).join('')}
- <p class="note">${t('Voeg hier foto’s en een korte introductie van elke docent toe.','Add photos and a short intro for each teacher here.')}</p></div></section>`,
+ ${TEACH.map(x=>`<div class="who"><div class="av" style="background:${x[4]}">${x[1]}</div><div><h3>${x[0]}</h3><p>${t(x[2],x[3])}</p></div></div>`).join('')}</div></section>`,
 
   voorstellingen: () => `<section><div class="wrap"><h1 class="xl">${t('Voorstellingen & projecten','Shows & projects')}</h1>
  <p>${t('Elk jaar spelen we in Crea Theater in Amsterdam. Hier zie je wat er binnenkort speelt.','Every year we perform at Crea Theater in Amsterdam. See what is playing soon.')}</p>
- ${admin?`<div class="cta flush"><button class="btn pink sm" data-moveall>${t('Verplaats alles naar archief','Move all to archive')}</button></div>`:''}
- ${prodGrid(PRODS.filter(isCur),admin)}
+ ${prodGrid(PRODS.filter(isCur))}
  <div class="cta"><a class="btn ghost" href="${href('archief')}">${t('Naar het archief','Go to the archive')}</a></div></div></section>`,
 
   archief: () => {
@@ -210,8 +193,7 @@ const V = {
  <div class="filters"><input id="fq" type="search" placeholder="${t('Zoek titel of student','Search title or student')}" value="${F.q}" aria-label="${t('Zoeken','Search')}">
  <select id="fy" aria-label="${t('Jaar','Year')}"><option value="">${t('Alle jaren','All years')}</option>${yrs.map(y=>`<option${F.year===y?' selected':''}>${y}</option>`).join('')}</select>
  <select id="ft" aria-label="${t('Variant','Track')}"><option value="">${t('Voltijd en deeltijd','Full- and part-time')}</option><option value="voltijd"${F.track==='voltijd'?' selected':''}>${t('Voltijd','Full-time')}</option><option value="deeltijd"${F.track==='deeltijd'?' selected':''}>${t('Deeltijd','Part-time')}</option></select></div>
- ${yy.length?yy.map(y=>`<h2>${y}</h2>${prodGrid(list.filter(p=>p.year===y),false)}`).join(''):`<p>${t('Geen producties gevonden. Pas je filters aan.','No productions found. Adjust your filters.')}</p>`}
- <p class="note mt-24">${t('Voorbeelddata: de titels zijn placeholders.','Sample data: titles are placeholders.')}</p></div></section>`
+ ${yy.length?yy.map(y=>`<h2>${y}</h2>${prodGrid(list.filter(p=>p.year===y))}`).join(''):`<p>${t('Geen producties gevonden. Pas je filters aan.','No productions found. Adjust your filters.')}</p>`}</div></section>`
   },
 
   contact: () => `<section><div class="wrap"><h1 class="xl">${t('Inschrijven & contact','Apply & contact')}</h1>
@@ -223,45 +205,30 @@ const V = {
  <div class="cta"><a class="btn pink" href="mailto:${MAIL[L]}">${t('Neem contact op','Get in touch')}</a></div><p class="note mt-12">${MAIL[L]}</p></div></div></div></section>`
 };
 
-/* ---------- render ---------- */
+
 function render() {
   const app = document.getElementById('app');
   document.documentElement.lang = L || 'nl';
   if (!L) {
     document.title = 'Theater & Praktijk · Theatre & Practice';
-    app.innerHTML = `<main class="landing"><a class="nl" href="#/nl/home" lang="nl"><span class="big">Theater &amp; Praktijk</span><small>Minor van de HvA. Nederlandstalig, sep t/m jan.</small></a><a class="en" href="#/en/home" lang="en"><span class="big">Theatre &amp; Practice</span><small>HvA minor. English-taught, Feb to Jun.</small></a></main>`;
+    app.innerHTML = `<main class="landing"><img class="hva-corner" src="logo-hva.png" alt="Hogeschool van Amsterdam"><a class="nl" href="#/nl/home" lang="nl"><span class="big">Theater &amp; Praktijk</span><small>Minor van de HvA. Nederlandstalig, sep t/m jan.</small></a><a class="en" href="#/en/home" lang="en"><span class="big">Theatre &amp; Practice</span><small>HvA minor. English-taught, Feb to Jun.</small></a></main>`;
     return
   }
   document.title = t('Theater & Praktijk · HvA minor', 'Theatre & Practice · HvA minor');
   const other = L === 'nl' ? 'en' : 'nl';
-  app.innerHTML = `<header class="top"><div class="wrap"><a class="logo" href="${href('home')}">🎭 ${t('Theater & Praktijk','Theatre & Practice')}</a>
+  app.innerHTML = `<header class="top"><div class="wrap"><img class="hva" src="logo-hva.png" alt="Hogeschool van Amsterdam">
+  <a class="logo" href="${href('home')}">${t('Theater & Praktijk','Theatre & Practice')}</a>
  <nav aria-label="${t('Hoofdmenu','Main menu')}">${PAGES.map(p=>`<a href="${href(p[0])}"${p[0]===pg?' aria-current="page"':''}>${t(p[1],p[2])}</a>`).join('')}</nav>
  <a class="lang" href="#/${other}/${pg}" hreflang="${other}">${other.toUpperCase()}</a></div></header>
  <main>${(V[pg]||V.home)()}</main>
- <footer><div class="wrap"><span>${t('Minor Theater & Praktijk · Hogeschool van Amsterdam','Minor Theatre & Practice · Amsterdam University of Applied Sciences')}</span>
- <label class="adm"><input type="checkbox" id="adm"${admin?' checked':''}> ${t('Beheer','Manage')}</label></div></footer>`;
+ <footer><div class="wrap"><span>${t('Minor Theater & Praktijk · Hogeschool van Amsterdam','Minor Theatre & Practice · Amsterdam University of Applied Sciences')}</span></div></footer>`;
   bind();
   rotate();
 }
 
 function bind() {
   const $ = s => document.querySelector(s);
-  $('#adm').onchange = e => {
-    admin = e.target.checked;
-    render()
-  };
   document.querySelectorAll('[data-open]').forEach(b => b.onclick = () => open(b.dataset.open));
-  document.querySelectorAll('[data-move]').forEach(b => b.onclick = () => {
-    moved.add(b.dataset.move);
-    save();
-    render()
-  });
-  const ma = $('[data-moveall]');
-  if (ma) ma.onclick = () => {
-    PRODS.filter(isCur).forEach(p => moved.add(p.id));
-    save();
-    render()
-  };
   const fq = $('#fq');
   if (fq) {
     fq.oninput = e => {
@@ -288,8 +255,7 @@ function open(id) {
     d = document.getElementById('dlg');
   d.innerHTML = `<div class="in"><div class="poster p${i%4} poster-wide"><small>${p.year}</small><strong>${p.title}</strong></div>
  <p><span class="tag">${trackName(p.track)}</span><span class="tag">${p.year}</span><span class="tag">Crea Theater</span></p>
- <p>${t(p.nl,p.en)}</p><p><b>${t('Makers','Makers')}:</b> ${p.who}</p>
- <p class="note">${t('Hier komen foto’s, affiche, video’s en programma.','Photos, poster, videos and programme go here.')}</p>
+ ${t(p.nl,p.en)?`<p>${t(p.nl,p.en)}</p>`:''}${p.who?`<p><b>${t('Makers','Makers')}:</b> ${p.who}</p>`:''}
  <button class="btn sm" id="cl">${t('Sluiten','Close')}</button></div>`;
   d.showModal();
   document.getElementById('cl').onclick = () => d.close()
